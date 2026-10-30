@@ -36,11 +36,11 @@ header{display:grid;gap:6px;margin-bottom:16px}
 
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
 nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:8px;margin-bottom:12px;border-bottom:1px solid var(--line)}
-.tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+.tabs{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:4px}
 .tabs::-webkit-scrollbar{display:none}
-.tabs a{flex:0 0 auto;display:grid;justify-items:center;min-width:54px;padding:6px 8px;border-radius:10px;text-decoration:none;color:var(--fg);border:1px solid var(--line);background:var(--surface)}
-.tabs a b{font-family:var(--display);font-size:1.15rem;line-height:1.1}
-.tabs a span{font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.tabs a{display:grid;justify-items:center;min-width:0;padding:6px 2px;border-radius:10px;text-decoration:none;color:var(--fg);border:1px solid var(--line);background:var(--surface)}
+.tabs a b{font-family:var(--display);font-size:1.05rem;line-height:1.1}
+.tabs a span{font-size:.62rem;white-space:nowrap;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
 .tabs a[aria-current="page"]{background:var(--accent);border-color:var(--accent);color:var(--bg)}
 .tabs a[aria-current="page"] span{color:var(--bg)}
 .tabs a.is-today{box-shadow:inset 0 -3px 0 var(--gold)}
@@ -57,6 +57,8 @@ section.view{display:grid;gap:16px}
 .flight .t{font-variant-numeric:tabular-nums;font-weight:700}
 .flight .mid{text-align:center;font-size:.8rem;color:var(--muted)}
 .flight .r{text-align:right}
+.flight a.fl{font-weight:700;font-size:1rem;color:var(--accent)}
+.flight .st{font-size:.72rem}
 .fno{display:flex;justify-content:space-between;font-size:.85rem;color:var(--muted);border-top:1px dashed var(--line);padding-top:8px}
 
 .kv{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:.95rem}
@@ -80,6 +82,8 @@ button,.btn{font:inherit;font-size:.85rem;font-weight:700;padding:6px 12px;borde
 .checks label{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;padding:8px 0;cursor:pointer}
 .checks input{width:20px;height:20px;margin-top:2px;accent-color:var(--accent)}
 .checks input:checked + span{color:var(--muted);text-decoration:line-through}
+.checks.sub{padding-left:30px}
+.checks.sub label{padding:4px 0}
 ul.plain{margin:0;padding-left:1.1rem;display:grid;gap:6px}
 a{color:var(--accent)}
 footer{margin-top:24px;font-size:.8rem;color:var(--muted)}
@@ -114,13 +118,13 @@ footer{margin-top:24px;font-size:.8rem;color:var(--muted)}
       <div class="eyebrow">Flights · Scoot</div>
       <div class="flight">
         <div><div class="code">MNL</div><div class="t">6:30 AM</div><div class="muted">Terminal 3</div></div>
-        <div class="mid">TR 589<br>Fri 6 Nov</div>
+        <div class="mid"><a class="fl" href="https://www.skyscanner.com/flight-tracker/scoot/tr589" target="_blank" rel="noopener">TR 589</a><br>Fri 6 Nov<br><span class="st">Check status ↗</span></div>
         <div class="r"><div class="code">SIN</div><div class="t">10:25 AM</div><div class="muted">Terminal 1</div></div>
       </div>
       <div class="fno"><span>Outbound</span><span>Operating</span></div>
       <div class="flight">
         <div><div class="code">SIN</div><div class="t">1:45 AM</div><div class="muted">Terminal 1</div></div>
-        <div class="mid">TR 588<br>Wed 11 Nov</div>
+        <div class="mid"><a class="fl" href="https://www.skyscanner.com/flight-tracker/scoot/tr588" target="_blank" rel="noopener">TR 588</a><br>Wed 11 Nov<br><span class="st">Check status ↗</span></div>
         <div class="r"><div class="code">MNL</div><div class="t">5:30 AM</div><div class="muted">Terminal 3</div></div>
       </div>
       <div class="fno"><span>Return · leave for Changi Tue night</span><span>Operating</span></div>
@@ -144,7 +148,7 @@ footer{margin-top:24px;font-size:.8rem;color:var(--muted)}
     </div>
 
     <div class="note"><strong>Flight night:</strong> TR 588 leaves at 1:45 AM Wednesday. After Universal Studios on Tuesday, head back to the hotel to pack and rest, then leave for Changi around 9:30 PM.</div>
-    <div class="note"><strong>Diwali:</strong> Sunday 8 Nov, with Monday 9 Nov a public holiday. Little India (right outside the hotel) will be lit up and very crowded in the evenings. Expect bigger crowds at the Oceanarium.</div>
+    <div class="note"><strong>Deepavali:</strong> Sunday 8 Nov, with Monday 9 Nov a public holiday. Little India (right outside the hotel) will be lit up and very crowded in the evenings. Expect bigger crowds at the Oceanarium.</div>
 
     <div class="card">
       <div class="eyebrow">Tips for travelling with Aki</div>
@@ -166,14 +170,14 @@ footer{margin-top:24px;font-size:.8rem;color:var(--muted)}
       <li><div class="when">~11:30 AM</div><div class="what"><b>Grab or taxi to hotel</b>To <a href="https://maps.app.goo.gl/prm3BeLJzAgfHL8y6" target="_blank" rel="noopener">Citadines Rochor</a>, about 25–30 min. Drop bags at the front desk.</div></li>
       <li><div class="when">~12:00 PM</div><div class="what"><b>Lunch nearby</b><a href="https://maps.app.goo.gl/3cWa7pxvsHDZWSg48" target="_blank" rel="noopener">Tekka Place</a> or <a href="https://maps.app.goo.gl/5PK6StWRQm55gdsG6" target="_blank" rel="noopener">Tekka Centre</a>.</div></li>
       <li><div class="when">3:00 PM</div><div class="what"><b>Check in</b>Nap / rest.</div></li>
-      <li><div class="when">Late afternoon / evening</div><div class="what"><b>Diwali lights</b>Short stroll down Serangoon Road, right outside the hotel. Early night.</div></li>
+      <li><div class="when">Late afternoon / evening</div><div class="what"><b>Deepavali light-up</b>Short stroll down Serangoon Road, right outside the hotel. Early night.</div></li>
     </ol></div>
   </section>
 
   <!-- SAT -->
   <section class="view" id="v-sat" hidden>
-    <div class="day-head"><div class="eyebrow">Saturday 7 Nov</div><h2>Criterium: Saturday Social</h2>
-      <p class="muted" style="margin:0"><a href="https://maps.app.goo.gl/9XESPb2Stvv9LkYW9" target="_blank" rel="noopener">Singapore Recreation Club</a>, B Connaught Drive (by the Padang). Nearest MRT: City Hall.</p></div>
+    <div class="day-head"><div class="eyebrow">Saturday 7 Nov</div><h2>TdF EFGH Singapore Criterium weekend, day 1</h2>
+      <div class="row"><a href="https://singaporecriterium.com/location-copy/" target="_blank" rel="noopener">Programme</a><span class="muted">·</span><a href="https://singaporecriterium.com/location/" target="_blank" rel="noopener">Location / map</a></div></div>
     <div class="card"><ol class="tl">
       <li><div class="when">~7:00 AM</div><div class="what"><b>Breakfast</b></div></li>
       <li><div class="when">~9:00 AM</div><div class="what"><b>Grab or taxi to venue</b>About 10 min. Allow extra for road closures.</div></li>
@@ -186,7 +190,7 @@ footer{margin-top:24px;font-size:.8rem;color:var(--muted)}
 
   <!-- SUN -->
   <section class="view" id="v-sun" hidden>
-    <div class="day-head"><div class="eyebrow">Sunday 8 Nov · Diwali Festival</div><h2>Pro race day</h2></div>
+    <div class="day-head"><div class="eyebrow">Sunday 8 Nov · <a href="https://en.wikipedia.org/wiki/Diwali" target="_blank" rel="noopener">Deepavali Festival</a></div><h2>TdF EFGH Singapore Criterium weekend, day 2</h2></div>
     <div class="card"><ol class="tl">
       <li><div class="when">~7:00 AM</div><div class="what"><b>Breakfast</b></div></li>
       <li><div class="when">Midday</div><div class="what"><b>Early lunch and nap</b></div></li>
@@ -194,7 +198,7 @@ footer{margin-top:24px;font-size:.8rem;color:var(--muted)}
       <li class="key"><div class="when">3:30 – 4:30 PM</div><div class="what"><b>Opening Parade</b>Vehicles loop the circuit throwing merch. Likely Aki's favorite part.</div></li>
       <li class="key"><div class="when">4:30 – 6:00 PM</div><div class="what"><b>Pro Race</b>Philipsen, Girmay, del Toro, Seixas.</div></li>
       <li><div class="when">6:00 – 7:00 PM</div><div class="what"><b>Podium ceremony</b></div></li>
-      <li><div class="when">Evening</div><div class="what"><b>Return to <a href="https://maps.app.goo.gl/TP9KN8ghy5J7eRaK6" target="_blank" rel="noopener">hotel</a></b>Explore Little India and enjoy the Diwali festival, then dinner.</div></li>
+      <li><div class="when">Evening</div><div class="what"><b>Return to <a href="https://maps.app.goo.gl/TP9KN8ghy5J7eRaK6" target="_blank" rel="noopener">hotel</a></b>Explore Little India and enjoy the Deepavali festival. Check out the festival village and bazaars at <a href="https://maps.app.goo.gl/7geEKzknYCbVnZ9y9" target="_blank" rel="noopener">Campbell Lane</a>, then dinner.</div></li>
     </ol></div>
   </section>
 
@@ -206,7 +210,7 @@ footer{margin-top:24px;font-size:.8rem;color:var(--muted)}
       <li><div class="when">~7:00 AM</div><div class="what"><b>Breakfast</b></div></li>
       <li><div class="when">~9:00 AM</div><div class="what"><b>MRT to HarbourFront</b>North East Line from Little India, end of the line. Then Sentosa Express or the Boardwalk.</div></li>
       <li class="key"><div class="when">~10:00 AM</div><div class="what"><b><a href="https://maps.app.goo.gl/Ggp7J1XpcyxakPT37" target="_blank" rel="noopener">Oceanarium</a> at opening</b>Beat the holiday crowds. Plan 2–3 hours.</div></li>
-      <li><div class="when">~2:00 PM</div><div class="what"><b>Explore Resorts World Sentosa</b><a href="https://share.google/WfWcqt1zBXiXjlbs3" target="_blank" rel="noopener">Harry Potter: Visions of Magic</a>, swimming at one of the beaches, or <a href="https://maps.app.goo.gl/ZCnhdn9LahZjidpw8" target="_blank" rel="noopener">Dopamine Land</a>.</div></li>
+      <li><div class="when">~2:00 PM</div><div class="what"><b>Explore Resorts World Sentosa</b>Possible destinations: <a href="https://maps.app.goo.gl/xeNkD3WYU13XYkT69" target="_blank" rel="noopener">Harry Potter: Visions of Magic</a>, swimming at one of the beaches, or <a href="https://maps.app.goo.gl/ZCnhdn9LahZjidpw8" target="_blank" rel="noopener">Dopamine Land</a>.</div></li>
       <li><div class="when">Evening</div><div class="what"><b>Back to the hotel</b>Dinner, then pack.</div></li>
     </ol></div>
   </section>
@@ -219,7 +223,7 @@ footer{margin-top:24px;font-size:.8rem;color:var(--muted)}
       <li><div class="when">~9:00 AM</div><div class="what"><b>Pick up Nanay</b>At the <a href="https://maps.app.goo.gl/3NNWXvryz4J9734E9" target="_blank" rel="noopener">Strand Hotel</a>.</div></li>
       <li class="key"><div class="when">10:00 AM</div><div class="what"><b><a href="https://maps.app.goo.gl/R3VettmTjsCkWR9H9" target="_blank" rel="noopener">Universal Studios Singapore</a></b></div></li>
       <li><div class="when">~4:00 PM</div><div class="what"><b>Leave USS, dinner</b>Resorts World or VivoCity, then drop off Nanay at the Strand Hotel.</div></li>
-      <li><div class="when">~6:30 PM</div><div class="what"><b>Back at Citadines</b>Pack and rest.</div></li>
+      <li><div class="when">~6:30 PM</div><div class="what"><b>Back at Citadines</b>Complete packing and rest.</div></li>
       <li class="key"><div class="when">~9:30 PM</div><div class="what"><b>Grab or taxi to <a href="https://maps.app.goo.gl/zMqUXxpu2TVoThMi9" target="_blank" rel="noopener">Changi</a></b></div></li>
     </ol></div>
   </section>
@@ -240,9 +244,9 @@ footer{margin-top:24px;font-size:.8rem;color:var(--muted)}
     <div class="card"><ul class="checks" id="checks">
       <li><label><input type="checkbox" id="c1"><span>SG Arrival Card for all three (submit from 3 Nov)</span></label></li>
       <li><label><input type="checkbox" id="c5"><span>PH eTravel Registration</span></label></li>
-      <li><label><input type="checkbox" id="c2"><span>Mommy's stuff</span></label></li>
-      <li><label><input type="checkbox" id="c3"><span>Daddy's stuff</span></label></li>
-      <li><label><input type="checkbox" id="c4"><span>Aki's stuff</span></label></li>
+      <li><label><input type="checkbox" id="c2"><span>Mommy's stuff</span></label><ul class="checks sub"><li><label><input type="checkbox" id="m1"><span>Clothes</span></label></li><li><label><input type="checkbox" id="m2"><span>Toiletries</span></label></li><li><label><input type="checkbox" id="m3"><span>Gadgets</span></label></li><li><label><input type="checkbox" id="m4"><span>Passport</span></label></li></ul></li>
+      <li><label><input type="checkbox" id="c3"><span>Daddy's stuff</span></label><ul class="checks sub"><li><label><input type="checkbox" id="d1"><span>Clothes</span></label></li><li><label><input type="checkbox" id="d2"><span>Toiletries</span></label></li><li><label><input type="checkbox" id="d3"><span>Gadgets</span></label></li><li><label><input type="checkbox" id="d4"><span>Passport</span></label></li></ul></li>
+      <li><label><input type="checkbox" id="c4"><span>Aki's stuff</span></label><ul class="checks sub"><li><label><input type="checkbox" id="a1"><span>Clothes</span></label></li><li><label><input type="checkbox" id="a2"><span>Toiletries</span></label></li><li><label><input type="checkbox" id="a3"><span>Diapers</span></label></li><li><label><input type="checkbox" id="a4"><span>Bottles, formula &amp; water</span></label></li><li><label><input type="checkbox" id="a5"><span>Passport</span></label></li></ul></li>
       <li><label><input type="checkbox" id="c6"><span>EZ-Link cards</span></label></li>
     </ul></div>
   </section>
