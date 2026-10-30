@@ -190,7 +190,8 @@ footer{margin-top:24px;font-size:.8rem;color:var(--muted)}
 
   <!-- SUN -->
   <section class="view" id="v-sun" hidden>
-    <div class="day-head"><div class="eyebrow">Sunday 8 Nov · <a href="https://en.wikipedia.org/wiki/Diwali" target="_blank" rel="noopener">Deepavali Festival</a></div><h2>TdF EFGH Singapore Criterium weekend, day 2</h2></div>
+    <div class="day-head"><div class="eyebrow">Sunday 8 Nov · Deepavali Festival</div><h2>TdF EFGH Singapore Criterium weekend, day 2</h2>
+      <div class="row"><a href="https://singaporecriterium.com/location-copy/" target="_blank" rel="noopener">Programme</a><span class="muted">·</span><a href="https://singaporecriterium.com/location/" target="_blank" rel="noopener">Location / map</a><span class="muted">·</span><a href="https://en.wikipedia.org/wiki/Diwali" target="_blank" rel="noopener">Deepavali Festival info</a></div></div>
     <div class="card"><ol class="tl">
       <li><div class="when">~7:00 AM</div><div class="what"><b>Breakfast</b></div></li>
       <li><div class="when">Midday</div><div class="what"><b>Early lunch and nap</b></div></li>
@@ -244,9 +245,11 @@ footer{margin-top:24px;font-size:.8rem;color:var(--muted)}
     <div class="card"><ul class="checks" id="checks">
       <li><label><input type="checkbox" id="c1"><span>SG Arrival Card for all three (submit from 3 Nov)</span></label></li>
       <li><label><input type="checkbox" id="c5"><span>PH eTravel Registration</span></label></li>
-      <li><label><input type="checkbox" id="c2"><span>Mommy's stuff</span></label><ul class="checks sub"><li><label><input type="checkbox" id="m1"><span>Clothes</span></label></li><li><label><input type="checkbox" id="m2"><span>Toiletries</span></label></li><li><label><input type="checkbox" id="m3"><span>Gadgets</span></label></li><li><label><input type="checkbox" id="m4"><span>Passport</span></label></li></ul></li>
-      <li><label><input type="checkbox" id="c3"><span>Daddy's stuff</span></label><ul class="checks sub"><li><label><input type="checkbox" id="d1"><span>Clothes</span></label></li><li><label><input type="checkbox" id="d2"><span>Toiletries</span></label></li><li><label><input type="checkbox" id="d3"><span>Gadgets</span></label></li><li><label><input type="checkbox" id="d4"><span>Passport</span></label></li></ul></li>
-      <li><label><input type="checkbox" id="c4"><span>Aki's stuff</span></label><ul class="checks sub"><li><label><input type="checkbox" id="a1"><span>Clothes</span></label></li><li><label><input type="checkbox" id="a2"><span>Toiletries</span></label></li><li><label><input type="checkbox" id="a3"><span>Diapers</span></label></li><li><label><input type="checkbox" id="a4"><span>Bottles, formula &amp; water</span></label></li><li><label><input type="checkbox" id="a5"><span>Passport</span></label></li></ul></li>
+      <li><label><input type="checkbox" id="c7"><span>Printed plane tickets / boarding pass</span></label></li>
+      <li><label><input type="checkbox" id="c8"><span>Flight check-in</span></label></li>
+      <li><label><input type="checkbox" id="m"><span>Mommy's stuff</span></label><ul class="checks sub"><li><label><input type="checkbox" id="m1"><span>Clothes</span></label></li><li><label><input type="checkbox" id="m2"><span>Toiletries</span></label></li><li><label><input type="checkbox" id="m3"><span>Gadgets, chargers, power bank</span></label></li><li><label><input type="checkbox" id="m4"><span>Personal stuff</span></label></li><li><label><input type="checkbox" id="m5"><span>Passport</span></label></li></ul></li>
+      <li><label><input type="checkbox" id="d"><span>Daddy's stuff</span></label><ul class="checks sub"><li><label><input type="checkbox" id="d1"><span>Clothes</span></label></li><li><label><input type="checkbox" id="d2"><span>Toiletries</span></label></li><li><label><input type="checkbox" id="d3"><span>Gadgets, chargers, power bank</span></label></li><li><label><input type="checkbox" id="d4"><span>Personal stuff</span></label></li><li><label><input type="checkbox" id="d5"><span>Passport</span></label></li></ul></li>
+      <li><label><input type="checkbox" id="a"><span>Aki's stuff</span></label><ul class="checks sub"><li><label><input type="checkbox" id="a1"><span>Clothes</span></label></li><li><label><input type="checkbox" id="a2"><span>Toiletries</span></label></li><li><label><input type="checkbox" id="a3"><span>Diapers, wipes, anti-rash cream</span></label></li><li><label><input type="checkbox" id="a4"><span>Bottles, formula, water</span></label></li><li><label><input type="checkbox" id="a5"><span>Books and/or toys</span></label></li><li><label><input type="checkbox" id="a6"><span>Passport</span></label></li></ul></li>
       <li><label><input type="checkbox" id="c6"><span>EZ-Link cards</span></label></li>
     </ul></div>
   </section>
@@ -285,7 +288,7 @@ footer{margin-top:24px;font-size:.8rem;color:var(--muted)}
   });
 
   // checklist persistence (this browser only)
-  var KEY="sg-trip-checks-v2";
+  var KEY="sg-trip-checks-v3";
   var state={};
   try{state=JSON.parse(localStorage.getItem(KEY)||"{}");}catch(e){}
   document.querySelectorAll("#checks input").forEach(function(cb){
