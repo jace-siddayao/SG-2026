@@ -1,0 +1,287 @@
+<title>Singapore Family Trip</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+/* Layout: phone-first single column; sticky day strip routes by #hash; each day is a vertical timeline */
+:root{
+  --bg:#f3f6f6; --surface:#ffffff; --fg:#14262b; --muted:#5a6d72; --line:#d6e0e1;
+  --accent:#0b7a75; --accent-soft:#dcefed; --gold:#c7860a; --gold-soft:#fbefd6;
+  --display:"Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
+  --body:"Atkinson Hyperlegible", system-ui, -apple-system, sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e1a1d; --surface:#152629; --fg:#e6efef; --muted:#93a8ac; --line:#26393d;
+  --accent:#4fc3bb; --accent-soft:#173936; --gold:#f0b545; --gold-soft:#3a2e15; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e1a1d; --surface:#152629; --fg:#e6efef; --muted:#93a8ac; --line:#26393d;
+  --accent:#4fc3bb; --accent-soft:#173936; --gold:#f0b545; --gold-soft:#3a2e15; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:16px/1.5 var(--body)}
+.wrap{max-width:640px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 48px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.15}
+h1{font-size:2rem;font-weight:800;letter-spacing:-.01em}
+h2{font-size:1.35rem;font-weight:800}
+h3{font-size:1.05rem;font-weight:600}
+.eyebrow{font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:700}
+.muted{color:var(--muted)}
+header{display:grid;gap:6px;margin-bottom:16px}
+#today{margin-top:6px;font-weight:700;color:var(--accent)}
+
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:8px;margin-bottom:12px;border-bottom:1px solid var(--line)}
+.tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tabs a{flex:0 0 auto;display:grid;justify-items:center;min-width:54px;padding:6px 8px;border-radius:10px;text-decoration:none;color:var(--fg);border:1px solid var(--line);background:var(--surface)}
+.tabs a b{font-family:var(--display);font-size:1.15rem;line-height:1.1}
+.tabs a span{font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.tabs a[aria-current="page"]{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+.tabs a[aria-current="page"] span{color:var(--bg)}
+.tabs a.is-today{box-shadow:inset 0 -3px 0 var(--gold)}
+.tabs a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+
+section.view{display:grid;gap:16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;display:grid;gap:10px}
+.note{background:var(--gold-soft);border-radius:12px;padding:12px 14px;font-size:.95rem}
+.note strong{color:var(--fg)}
+
+/* flights as boarding strips */
+.flight{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px}
+.flight .code{font-family:var(--display);font-size:1.6rem;font-weight:800;line-height:1}
+.flight .t{font-variant-numeric:tabular-nums;font-weight:700}
+.flight .mid{text-align:center;font-size:.8rem;color:var(--muted)}
+.flight .r{text-align:right}
+.fno{display:flex;justify-content:space-between;font-size:.85rem;color:var(--muted);border-top:1px dashed var(--line);padding-top:8px}
+
+.kv{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;font-size:.95rem}
+.kv dt{color:var(--muted)}
+.kv dd{margin:0;min-width:0}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+button,.btn{font:inherit;font-size:.85rem;font-weight:700;padding:6px 12px;border-radius:999px;border:1px solid var(--accent);background:var(--accent-soft);color:var(--fg);cursor:pointer;text-decoration:none}
+
+/* timeline */
+.day-head{display:grid;gap:4px}
+.tl{list-style:none;margin:0;padding:0;display:grid}
+.tl li{display:grid;grid-template-columns:5.4rem 1fr;gap:12px;padding-block:10px;border-top:1px solid var(--line)}
+.tl li:first-child{border-top:0}
+.tl .when{font-variant-numeric:tabular-nums;font-weight:700;font-size:.85rem;color:var(--accent);line-height:1.35}
+.tl .what{min-width:0}
+.tl .what b{display:block}
+.tl li.key .when{color:var(--gold)}
+.tl li.key .what b::after{content:" ★";color:var(--gold)}
+
+.checks{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+.checks label{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start;padding:8px 0;cursor:pointer}
+.checks input{width:20px;height:20px;margin-top:2px;accent-color:var(--accent)}
+.checks input:checked + span{color:var(--muted);text-decoration:line-through}
+ul.plain{margin:0;padding-left:1.1rem;display:grid;gap:6px}
+a{color:var(--accent)}
+footer{margin-top:24px;font-size:.8rem;color:var(--muted)}
+@media (prefers-reduced-motion:no-preference){section.view{animation:in .18s ease-out}@keyframes in{from{transform:translateY(4px)}to{transform:none}}}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Jace, wife &amp; little one · 6–11 Nov 2026</div>
+    <h1>Singapore Family Trip</h1>
+    <div id="today" hidden></div>
+  </header>
+
+  <nav aria-label="Days">
+    <div class="tabs" id="tabs">
+      <a href="#overview" data-view="overview"><span>Trip</span><b>Info</b></a>
+      <a href="#fri" data-view="fri" data-date="2026-11-06"><span>Fri</span><b>6</b></a>
+      <a href="#sat" data-view="sat" data-date="2026-11-07"><span>Sat</span><b>7</b></a>
+      <a href="#sun" data-view="sun" data-date="2026-11-08"><span>Sun</span><b>8</b></a>
+      <a href="#mon" data-view="mon" data-date="2026-11-09"><span>Mon</span><b>9</b></a>
+      <a href="#tue" data-view="tue" data-date="2026-11-10"><span>Tue</span><b>10</b></a>
+      <a href="#wed" data-view="wed" data-date="2026-11-11"><span>Wed</span><b>11</b></a>
+      <a href="#checklist" data-view="checklist"><span>To do</span><b>✓</b></a>
+    </div>
+  </nav>
+
+  <!-- OVERVIEW -->
+  <section class="view" id="v-overview">
+    <div class="card">
+      <div class="eyebrow">Flights · Scoot</div>
+      <div class="flight">
+        <div><div class="code">MNL</div><div class="t">6:30 AM</div></div>
+        <div class="mid">TR 589<br>Fri 6 Nov</div>
+        <div class="r"><div class="code">SIN</div><div class="t">10:25 AM</div></div>
+      </div>
+      <div class="fno"><span>Outbound</span><span>Operating</span></div>
+      <div class="flight">
+        <div><div class="code">SIN</div><div class="t">1:45 AM</div></div>
+        <div class="mid">TR 588<br>Wed 11 Nov</div>
+        <div class="r"><div class="code">MNL</div><div class="t">5:30 AM</div></div>
+      </div>
+      <div class="fno"><span>Return · leave for Changi Tue night</span><span>Operating</span></div>
+    </div>
+
+    <div class="card">
+      <div class="eyebrow">Hotel</div>
+      <h2>Citadines Rochor</h2>
+      <dl class="kv">
+        <dt>Address</dt><dd id="addr">2 Serangoon Road, Singapore 218227</dd>
+        <dt>Check-in</dt><dd>From 3:00 PM</dd>
+        <dt>Check-out</dt><dd>By 12:00 PM</dd>
+        <dt>MRT</dt><dd>Rochor &amp; Little India, ~4 min walk</dd>
+        <dt>Room</dt><dd>Kitchen in every unit, outdoor pool</dd>
+      </dl>
+      <div class="row">
+        <button type="button" id="copyAddr">Copy address</button>
+        <a class="btn" href="https://www.google.com/maps/search/?api=1&query=Citadines+Rochor+2+Serangoon+Road+Singapore" target="_blank" rel="noopener">Open in Maps</a>
+      </div>
+      <div id="copied" class="muted" hidden>Address copied.</div>
+    </div>
+
+    <div class="note"><strong>Flight night:</strong> TR 588 leaves at 1:45 AM Wednesday, so after Universal Studios on Tuesday you collect bags at the hotel and head to Changi around 9:30 PM.</div>
+    <div class="note"><strong>Deepavali:</strong> Sunday 8 Nov, with Monday 9 Nov a public holiday. Little India (right outside the hotel) will be lit up and very crowded in the evenings. Expect bigger crowds at the Oceanarium.</div>
+
+    <div class="card">
+      <div class="eyebrow">Toddler tips</div>
+      <ul class="plain">
+        <li><b>Rain:</b> November is wet season. Pack a compact umbrella, stroller rain cover and spare clothes.</li>
+        <li><b>MRT:</b> Lifts at every station. Tap a contactless bank card; your son rides free.</li>
+        <li><b>Race day:</b> Ear protection, water, hat, snacks.</li>
+        <li><b>USS:</b> Bring or rent a stroller. Use rider switch to take turns on bigger rides.</li>
+        <li><b>Flight night:</b> Dinner and pajamas before the airport so he sleeps on board.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- FRI -->
+  <section class="view" id="v-fri" hidden>
+    <div class="day-head"><div class="eyebrow">Friday 6 Nov</div><h2>Arrive and settle in</h2></div>
+    <div class="card"><ol class="tl">
+      <li class="key"><div class="when">10:25 AM</div><div class="what"><b>Land at Changi</b>Immigration and bags.</div></li>
+      <li><div class="when">~11:30 AM</div><div class="what"><b>Grab or taxi to hotel</b>About 25–30 min. Drop bags at the front desk.</div></li>
+      <li><div class="when">12:00 PM</div><div class="what"><b>Easy lunch</b>Bugis or Little India, both walkable.</div></li>
+      <li><div class="when">3:00 PM</div><div class="what"><b>Check in</b>Nap and rest.</div></li>
+      <li><div class="when">Late PM</div><div class="what"><b>Pool or grocery run</b>Milk, snacks, breakfast for the kitchen.</div></li>
+      <li><div class="when">Evening</div><div class="what"><b>Deepavali lights</b>Short stroll down Serangoon Road, right outside. Early night.</div></li>
+    </ol></div>
+  </section>
+
+  <!-- SAT -->
+  <section class="view" id="v-sat" hidden>
+    <div class="day-head"><div class="eyebrow">Saturday 7 Nov</div><h2>Criterium: Saturday Social</h2>
+      <p class="muted" style="margin:0">Singapore Recreation Club, B Connaught Drive (by the Padang). Nearest MRT: City Hall.</p></div>
+    <div class="card"><ol class="tl">
+      <li><div class="when">~9:15 AM</div><div class="what"><b>Grab or taxi to venue</b>About 10 min. Allow extra for road closures.</div></li>
+      <li class="key"><div class="when">10:00 AM – 12:00 PM</div><div class="what"><b>Saturday Social</b>Meet and greet with the pro cyclists. Check your ticket for breakfast.</div></li>
+      <li><div class="when">12:00 PM</div><div class="what"><b>Lunch, then nap</b>Back at the hotel.</div></li>
+      <li><div class="when">11:00 AM – 6:00 PM</div><div class="what"><b>Festival Village</b>Vendor booths and games, open all day.</div></li>
+      <li><div class="when">5:00 – 6:00 PM</div><div class="what"><b>Team Presentation</b>Riders introduced on stage. Optional trip back after the nap.</div></li>
+      <li><div class="when">Evening</div><div class="what"><b>Dinner</b>Marina Bay or near the hotel.</div></li>
+    </ol></div>
+  </section>
+
+  <!-- SUN -->
+  <section class="view" id="v-sun" hidden>
+    <div class="day-head"><div class="eyebrow">Sunday 8 Nov · Deepavali</div><h2>Pro race day</h2></div>
+    <div class="card"><ol class="tl">
+      <li><div class="when">Morning</div><div class="what"><b>Quiet morning</b>Amateur rides run on the circuit from 6:30 AM; skip or relax.</div></li>
+      <li><div class="when">Midday</div><div class="what"><b>Early lunch and nap</b></div></li>
+      <li><div class="when">~2:00 PM</div><div class="what"><b>Head to the circuit</b>Roads closed; MRT or drop-off a few streets away.</div></li>
+      <li><div class="when">2:30 – 3:30 PM</div><div class="what"><b>Pro Team Time Trial</b></div></li>
+      <li class="key"><div class="when">3:30 – 4:30 PM</div><div class="what"><b>Opening Parade</b>Vehicles loop the circuit throwing merch. Likely his favorite part.</div></li>
+      <li class="key"><div class="when">4:30 – 6:00 PM</div><div class="what"><b>Pro Race</b>Philipsen, Girmay, del Toro, Seixas.</div></li>
+      <li><div class="when">6:00 – 7:00 PM</div><div class="what"><b>Podium ceremony</b></div></li>
+      <li><div class="when">Evening</div><div class="what"><b>Dinner</b>Little India is busiest tonight; eat near the circuit or head back early.</div></li>
+    </ol></div>
+  </section>
+
+  <!-- MON -->
+  <section class="view" id="v-mon" hidden>
+    <div class="day-head"><div class="eyebrow">Monday 9 Nov · public holiday</div><h2>Singapore Oceanarium</h2>
+      <p class="muted" style="margin:0">8 Sentosa Gateway, Resorts World Sentosa.</p></div>
+    <div class="card"><ol class="tl">
+      <li><div class="when">~9:00 AM</div><div class="what"><b>MRT to HarbourFront</b>North East Line from Little India, end of the line. Then Sentosa Express or the Boardwalk.</div></li>
+      <li class="key"><div class="when">10:00 AM</div><div class="what"><b>Oceanarium at opening</b>Beat the holiday crowds. Plan 2–3 hours.</div></li>
+      <li><div class="when">~1:00 PM</div><div class="what"><b>Lunch at Resorts World</b>Then back for a nap, or a Sentosa beach if he's still going.</div></li>
+      <li><div class="when">Evening</div><div class="what"><b>Pack</b>Most bags packed tonight for tomorrow's check-out.</div></li>
+    </ol></div>
+  </section>
+
+  <!-- TUE -->
+  <section class="view" id="v-tue" hidden>
+    <div class="day-head"><div class="eyebrow">Tuesday 10 Nov</div><h2>Universal Studios, then the airport</h2></div>
+    <div class="card"><ol class="tl">
+      <li><div class="when">~8:30 AM</div><div class="what"><b>Check out</b>Leave luggage at the front desk.</div></li>
+      <li><div class="when">~9:15 AM</div><div class="what"><b>MRT to HarbourFront</b>Same route as Monday. USS is next to the Oceanarium.</div></li>
+      <li class="key"><div class="when">10:00 AM</div><div class="what"><b>Universal Studios opens</b>Closing usually ~7 PM; check the day's hours.</div></li>
+      <li><div class="when">Midday</div><div class="what"><b>Stroller nap</b>Or a quiet indoor show.</div></li>
+      <li><div class="when">~6:00 PM</div><div class="what"><b>Leave USS, dinner</b>Resorts World or VivoCity.</div></li>
+      <li><div class="when">~8:30 PM</div><div class="what"><b>Collect bags at hotel</b>Pajamas on.</div></li>
+      <li class="key"><div class="when">~9:30 PM</div><div class="what"><b>Grab or taxi to Changi</b>About 25–30 min.</div></li>
+    </ol></div>
+  </section>
+
+  <!-- WED -->
+  <section class="view" id="v-wed" hidden>
+    <div class="day-head"><div class="eyebrow">Wednesday 11 Nov</div><h2>Fly home</h2></div>
+    <div class="card"><ol class="tl">
+      <li class="key"><div class="when">1:45 AM</div><div class="what"><b>TR 588 departs Singapore</b></div></li>
+      <li><div class="when">5:30 AM</div><div class="what"><b>Arrive Manila</b></div></li>
+    </ol></div>
+  </section>
+
+  <!-- CHECKLIST -->
+  <section class="view" id="v-checklist" hidden>
+    <div class="day-head"><div class="eyebrow">Before you go</div><h2>Bookings checklist</h2>
+      <p class="muted" style="margin:0">Ticks are saved on this phone only.</p></div>
+    <div class="card"><ul class="checks" id="checks">
+      <li><label><input type="checkbox" id="c1"><span>SG Arrival Card for all three (submit from 3 Nov)</span></label></li>
+      <li><label><input type="checkbox" id="c2"><span>Check whether Saturday Social tickets cover Sunday trackside viewing</span></label></li>
+      <li><label><input type="checkbox" id="c3"><span>Oceanarium tickets for Mon 9 Nov (under-4s need no booking)</span></label></li>
+      <li><label><input type="checkbox" id="c4"><span>USS tickets for Tue 10 Nov; confirm under-4 policy and closing time</span></label></li>
+      <li><label><input type="checkbox" id="c5"><span>Ask Citadines about luggage storage / late check-out on 10 Nov</span></label></li>
+      <li><label><input type="checkbox" id="c6"><span>Scoot add-ons: bags, seats together, stroller</span></label></li>
+      <li><label><input type="checkbox" id="c7"><span>Grab app installed</span></label></li>
+      <li><label><input type="checkbox" id="c8"><span>Confirm your son has his own seat on both flights</span></label></li>
+    </ul></div>
+  </section>
+
+  <footer>Times past fixed events are suggestions. Criterium programme may change; check singaporecriterium.com.</footer>
+</div>
+
+<script>
+(function(){
+  var views=["overview","fri","sat","sun","mon","tue","wed","checklist"];
+  var tabs=document.querySelectorAll("#tabs a");
+  // Singapore date today
+  var sgToday=new Intl.DateTimeFormat("en-CA",{timeZone:"Asia/Singapore"}).format(new Date());
+  var todayView=null;
+  tabs.forEach(function(a){ if(a.dataset.date===sgToday){a.classList.add("is-today");todayView=a.dataset.view;} });
+  if(todayView){var t=document.getElementById("today");t.textContent="Today is in the plan — tap the highlighted day.";t.hidden=false;}
+
+  function show(){
+    var h=location.hash.replace("#","");
+    if(views.indexOf(h)<0) h=todayView||"overview";
+    views.forEach(function(v){document.getElementById("v-"+v).hidden=(v!==h);});
+    tabs.forEach(function(a){
+      if(a.dataset.view===h){a.setAttribute("aria-current","page");try{a.scrollIntoView({inline:"center",block:"nearest"});}catch(e){}}
+      else a.removeAttribute("aria-current");
+    });
+  }
+  window.addEventListener("hashchange",function(){show();window.scrollTo(0,0);});
+  show();
+
+  // copy address
+  document.getElementById("copyAddr").addEventListener("click",function(){
+    var txt=document.getElementById("addr").textContent, msg=document.getElementById("copied");
+    function done(){msg.hidden=false;setTimeout(function(){msg.hidden=true;},2000);}
+    try{navigator.clipboard.writeText(txt).then(done,function(){sel();});}catch(e){sel();}
+    function sel(){var r=document.createRange();r.selectNodeContents(document.getElementById("addr"));var s=getSelection();s.removeAllRanges();s.addRange(r);}
+  });
+
+  // checklist persistence (this browser only)
+  var KEY="sg-trip-checks";
+  var state={};
+  try{state=JSON.parse(localStorage.getItem(KEY)||"{}");}catch(e){}
+  document.querySelectorAll("#checks input").forEach(function(cb){
+    cb.checked=!!state[cb.id];
+    cb.addEventListener("change",function(){state[cb.id]=cb.checked;try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}});
+  });
+})();
+</script>
