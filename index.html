@@ -83,6 +83,20 @@ button,.btn{font:inherit;font-size:.85rem;font-weight:700;padding:6px 12px;borde
 .checks input{width:20px;height:20px;margin-top:2px;accent-color:var(--accent)}
 .checks input:checked + span{color:var(--muted);text-decoration:line-through}
 .checks.sub{padding-left:30px}
+.wx-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.wx-day{border:1px solid var(--line);border-radius:10px;padding:8px;display:grid;gap:2px;justify-items:center;text-align:center;font-variant-numeric:tabular-nums}
+.wx-day .d{font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700}
+.wx-day .i{font-size:1.5rem;line-height:1.2}
+.wx-day .c{font-size:.75rem;color:var(--muted)}
+.wx-day .hl{font-weight:700;white-space:nowrap}
+.wx-day .hl span{color:var(--muted);font-weight:400}
+.wx-day .p{font-size:.78rem;color:var(--accent);font-weight:700}
+.wx-day.na{opacity:.6}
+.wx-meta{font-size:.8rem}
+.kv.sos{grid-template-columns:8.5rem 1fr;gap:10px 12px}
+.kv.sos dd{line-height:1.45}
+a.num{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+@media (max-width:380px){.kv.sos{grid-template-columns:1fr;gap:2px}.kv.sos dd{margin-bottom:8px}}
 .checks.sub label{padding:4px 0}
 ul.plain{margin:0;padding-left:1.1rem;display:grid;gap:6px}
 a{color:var(--accent)}
@@ -147,8 +161,30 @@ footer{margin-top:24px;font-size:.8rem;color:var(--muted)}
       <div id="copied" class="muted" hidden>Address copied.</div>
     </div>
 
+    <div class="note"><strong>Family joining:</strong> Nanay, Tita Nikka &amp; Tito Jiko arrive Sunday 8 Nov.</div>
+
+    <div class="card" id="wx">
+      <div class="row" style="justify-content:space-between">
+        <div class="eyebrow">Weather · 6–11 Nov</div>
+        <button type="button" id="wxRefresh">Refresh</button>
+      </div>
+      <div class="wx-grid" id="wxGrid" aria-live="polite"></div>
+      <div class="muted wx-meta" id="wxMeta">Loading forecast…</div>
+    </div>
+
     <div class="note"><strong>Flight night:</strong> TR 588 leaves at 1:45 AM Wednesday. After Universal Studios on Tuesday, head back to the hotel to pack and rest, then leave for Changi around 9:30 PM.</div>
     <div class="note"><strong>Deepavali:</strong> Sunday 8 Nov, with Monday 9 Nov a public holiday. Little India (right outside the hotel) will be lit up and very crowded in the evenings. Expect bigger crowds at the Oceanarium.</div>
+
+    <div class="card" id="sos">
+      <div class="eyebrow">Emergency</div>
+      <dl class="kv sos">
+        <dt>Ambulance / fire</dt><dd><a class="num" href="tel:995">995</a></dd>
+        <dt>Police</dt><dd><a class="num" href="tel:999">999</a></dd>
+        <dt>Children's hospital</dt><dd><b>KK Women's and Children's Hospital</b><br>100 Bukit Timah Road. Has a Children's Emergency department. A short taxi ride from the hotel.<br><a class="num" href="tel:+6562255554">+65 6225 5554</a> · <a href="https://www.kkh.com.sg/directions" target="_blank" rel="noopener">Directions</a></dd>
+        <dt>Philippine Embassy</dt><dd>20 Nassim Road, Singapore 258395<br><a class="num" href="tel:+6567373977">+65 6737 3977</a> (main)<br>Consular: <a class="num" href="tel:+6569247596">+65 6924 7596</a> / <a class="num" href="tel:+6587660151">+65 8766 0151</a></dd>
+        <dt>Hotel</dt><dd>Citadines Rochor, 2 Serangoon Road<br><span class="muted">Phone: see your booking confirmation</span></dd>
+      </dl>
+    </div>
 
     <div class="card">
       <div class="eyebrow">Tips for travelling with Aki</div>
@@ -166,9 +202,9 @@ footer{margin-top:24px;font-size:.8rem;color:var(--muted)}
   <section class="view" id="v-fri" hidden>
     <div class="day-head"><div class="eyebrow">Friday 6 Nov</div><h2>Arrive and settle in</h2></div>
     <div class="card"><ol class="tl">
-      <li class="key"><div class="when">10:25 AM</div><div class="what"><b>Land at Changi T1</b>Immigration and bags.</div></li>
-      <li><div class="when">~11:30 AM</div><div class="what"><b>Grab or taxi to hotel</b>To <a href="https://maps.app.goo.gl/prm3BeLJzAgfHL8y6" target="_blank" rel="noopener">Citadines Rochor</a>, about 25–30 min. Drop bags at the front desk.</div></li>
-      <li><div class="when">~12:00 PM</div><div class="what"><b>Lunch nearby</b><a href="https://maps.app.goo.gl/3cWa7pxvsHDZWSg48" target="_blank" rel="noopener">Tekka Place</a> or <a href="https://maps.app.goo.gl/5PK6StWRQm55gdsG6" target="_blank" rel="noopener">Tekka Centre</a>.</div></li>
+      <li class="key"><div class="when">10:25 AM</div><div class="what"><b><a href="https://www.skyscanner.com/flight-tracker/scoot/tr589" target="_blank" rel="noopener">TR 589</a> arrives at Changi T1</b>Immigration and bags.</div></li>
+      <li><div class="when">~1:00 PM</div><div class="what"><b>Grab or taxi to hotel</b>To <a href="https://maps.app.goo.gl/prm3BeLJzAgfHL8y6" target="_blank" rel="noopener">Citadines Rochor</a>. Drop bags at the front desk.</div></li>
+      <li><div class="when">~2:00 PM</div><div class="what"><b>Explore nearby</b><a href="https://maps.app.goo.gl/3cWa7pxvsHDZWSg48" target="_blank" rel="noopener">Tekka Place</a> or <a href="https://maps.app.goo.gl/5PK6StWRQm55gdsG6" target="_blank" rel="noopener">Tekka Centre</a>.</div></li>
       <li><div class="when">3:00 PM</div><div class="what"><b>Check in</b>Nap / rest.</div></li>
       <li><div class="when">Late afternoon / evening</div><div class="what"><b>Deepavali light-up</b>Short stroll down Serangoon Road, right outside the hotel. Early night.</div></li>
     </ol></div>
@@ -205,27 +241,28 @@ footer{margin-top:24px;font-size:.8rem;color:var(--muted)}
 
   <!-- MON -->
   <section class="view" id="v-mon" hidden>
-    <div class="day-head"><div class="eyebrow">Monday 9 Nov · public holiday</div><h2>Singapore Oceanarium</h2>
-      <p class="muted" style="margin:0">8 Sentosa Gateway, Resorts World Sentosa.</p></div>
+    <div class="day-head"><div class="eyebrow">Monday 9 Nov</div><h2>Singapore Oceanarium</h2>
+      <p class="muted" style="margin:0">With Nanay, Tita Nikka &amp; Tito Jiko. 8 Sentosa Gateway, Resorts World Sentosa.</p></div>
     <div class="card"><ol class="tl">
       <li><div class="when">~7:00 AM</div><div class="what"><b>Breakfast</b></div></li>
       <li><div class="when">~9:00 AM</div><div class="what"><b>MRT to HarbourFront</b>North East Line from Little India, end of the line. Then Sentosa Express or the Boardwalk.</div></li>
-      <li class="key"><div class="when">~10:00 AM</div><div class="what"><b><a href="https://maps.app.goo.gl/Ggp7J1XpcyxakPT37" target="_blank" rel="noopener">Oceanarium</a> at opening</b>Beat the holiday crowds. Plan 2–3 hours.</div></li>
-      <li><div class="when">~2:00 PM</div><div class="what"><b>Explore Resorts World Sentosa</b>Possible destinations: <a href="https://maps.app.goo.gl/xeNkD3WYU13XYkT69" target="_blank" rel="noopener">Harry Potter: Visions of Magic</a>, swimming at one of the beaches, or <a href="https://maps.app.goo.gl/ZCnhdn9LahZjidpw8" target="_blank" rel="noopener">Dopamine Land</a>.</div></li>
+      <li class="key"><div class="when">~10:00 AM</div><div class="what"><b><a href="https://maps.app.goo.gl/Ggp7J1XpcyxakPT37" target="_blank" rel="noopener">Oceanarium</a> at opening</b>Ahead of the holiday crowds.</div></li>
+      <li><div class="when">~2:00 PM</div><div class="what"><b>Explore Sentosa</b><a href="https://maps.app.goo.gl/r8pWBnU6FbAFKJHx8" target="_blank" rel="noopener">KidZania Singapore</a>.</div></li>
       <li><div class="when">Evening</div><div class="what"><b>Back to the hotel</b>Dinner, then pack.</div></li>
     </ol></div>
   </section>
 
   <!-- TUE -->
   <section class="view" id="v-tue" hidden>
-    <div class="day-head"><div class="eyebrow">Tuesday 10 Nov</div><h2>Universal Studios</h2></div>
+    <div class="day-head"><div class="eyebrow">Tuesday 10 Nov</div><h2>Universal Studios</h2>
+      <p class="muted" style="margin:0">With Nanay.</p></div>
     <div class="card"><ol class="tl">
       <li><div class="when">~7:00 AM</div><div class="what"><b>Breakfast</b></div></li>
       <li><div class="when">~9:00 AM</div><div class="what"><b>Pick up Nanay</b>At the <a href="https://maps.app.goo.gl/3NNWXvryz4J9734E9" target="_blank" rel="noopener">Strand Hotel</a>.</div></li>
       <li class="key"><div class="when">10:00 AM</div><div class="what"><b><a href="https://maps.app.goo.gl/R3VettmTjsCkWR9H9" target="_blank" rel="noopener">Universal Studios Singapore</a></b></div></li>
-      <li><div class="when">~4:00 PM</div><div class="what"><b>Leave USS, dinner</b>Resorts World or VivoCity, then drop off Nanay at the Strand Hotel.</div></li>
+      <li><div class="when">~4:00 PM</div><div class="what"><b>Leave USS, early dinner</b>Resorts World or VivoCity, then drop off Nanay at the Strand Hotel.</div></li>
       <li><div class="when">~6:30 PM</div><div class="what"><b>Back at Citadines</b>Complete packing and rest.</div></li>
-      <li class="key"><div class="when">~9:30 PM</div><div class="what"><b>Grab or taxi to <a href="https://maps.app.goo.gl/zMqUXxpu2TVoThMi9" target="_blank" rel="noopener">Changi</a></b></div></li>
+      <li class="key"><div class="when">~9:30 PM</div><div class="what"><b>Grab or taxi to <a href="https://maps.app.goo.gl/zMqUXxpu2TVoThMi9" target="_blank" rel="noopener">Changi</a></b>TR 588 departs SIN T1 at 1:45 AM.</div></li>
     </ol></div>
   </section>
 
@@ -233,7 +270,7 @@ footer{margin-top:24px;font-size:.8rem;color:var(--muted)}
   <section class="view" id="v-wed" hidden>
     <div class="day-head"><div class="eyebrow">Wednesday 11 Nov</div><h2>Fly home</h2></div>
     <div class="card"><ol class="tl">
-      <li class="key"><div class="when">1:45 AM</div><div class="what"><b>TR 588 departs SIN T1</b></div></li>
+      <li class="key"><div class="when">1:45 AM</div><div class="what"><b><a href="https://www.skyscanner.com/flight-tracker/scoot/tr588" target="_blank" rel="noopener">TR 588</a> departs SIN T1</b></div></li>
       <li><div class="when">5:30 AM</div><div class="what"><b>Arrive MNL T3</b></div></li>
     </ol></div>
   </section>
@@ -246,11 +283,13 @@ footer{margin-top:24px;font-size:.8rem;color:var(--muted)}
       <li><label><input type="checkbox" id="c1"><span>SG Arrival Card for all three (submit from 3 Nov)</span></label></li>
       <li><label><input type="checkbox" id="c5"><span>PH eTravel Registration</span></label></li>
       <li><label><input type="checkbox" id="c7"><span>Printed plane tickets / boarding pass</span></label></li>
-      <li><label><input type="checkbox" id="c8"><span>Flight check-in</span></label></li>
-      <li><label><input type="checkbox" id="m"><span>Mommy's stuff</span></label><ul class="checks sub"><li><label><input type="checkbox" id="m1"><span>Clothes</span></label></li><li><label><input type="checkbox" id="m2"><span>Toiletries</span></label></li><li><label><input type="checkbox" id="m3"><span>Gadgets, chargers, power bank</span></label></li><li><label><input type="checkbox" id="m4"><span>Personal stuff</span></label></li><li><label><input type="checkbox" id="m5"><span>Passport</span></label></li></ul></li>
-      <li><label><input type="checkbox" id="d"><span>Daddy's stuff</span></label><ul class="checks sub"><li><label><input type="checkbox" id="d1"><span>Clothes</span></label></li><li><label><input type="checkbox" id="d2"><span>Toiletries</span></label></li><li><label><input type="checkbox" id="d3"><span>Gadgets, chargers, power bank</span></label></li><li><label><input type="checkbox" id="d4"><span>Personal stuff</span></label></li><li><label><input type="checkbox" id="d5"><span>Passport</span></label></li></ul></li>
-      <li><label><input type="checkbox" id="a"><span>Aki's stuff</span></label><ul class="checks sub"><li><label><input type="checkbox" id="a1"><span>Clothes</span></label></li><li><label><input type="checkbox" id="a2"><span>Toiletries</span></label></li><li><label><input type="checkbox" id="a3"><span>Diapers, wipes, anti-rash cream</span></label></li><li><label><input type="checkbox" id="a4"><span>Bottles, formula, water</span></label></li><li><label><input type="checkbox" id="a5"><span>Books and/or toys</span></label></li><li><label><input type="checkbox" id="a6"><span>Passport</span></label></li></ul></li>
-      <li><label><input type="checkbox" id="c6"><span>EZ-Link cards</span></label></li>
+      <li><label><input type="checkbox" id="c8"><span>Flight online check-in</span></label></li>
+      <li><label><input type="checkbox" id="m"><span>Mommy's stuff</span></label><ul class="checks sub"><li><label><input type="checkbox" id="m1"><span>Clothes and shoes</span></label></li><li><label><input type="checkbox" id="m2"><span>Swimwear</span></label></li><li><label><input type="checkbox" id="m3"><span>Toiletries</span></label></li><li><label><input type="checkbox" id="m4"><span>Gadgets, chargers, power bank</span></label></li><li><label><input type="checkbox" id="m5"><span>Personal stuff</span></label></li><li><label><input type="checkbox" id="m6"><span>Passport</span></label></li><li><label><input type="checkbox" id="m7"><span>EZ-Link card</span></label></li><li><label><input type="checkbox" id="m8"><span>COE, travel documents</span></label></li></ul></li>
+      <li><label><input type="checkbox" id="d"><span>Daddy's stuff</span></label><ul class="checks sub"><li><label><input type="checkbox" id="d1"><span>Clothes and shoes</span></label></li><li><label><input type="checkbox" id="d2"><span>Swimwear</span></label></li><li><label><input type="checkbox" id="d3"><span>Toiletries</span></label></li><li><label><input type="checkbox" id="d4"><span>Gadgets, chargers, power bank</span></label></li><li><label><input type="checkbox" id="d5"><span>Personal stuff</span></label></li><li><label><input type="checkbox" id="d6"><span>Passport</span></label></li><li><label><input type="checkbox" id="d7"><span>EZ-Link card</span></label></li><li><label><input type="checkbox" id="d8"><span>COE, travel documents</span></label></li></ul></li>
+      <li><label><input type="checkbox" id="a"><span>Aki's stuff</span></label><ul class="checks sub"><li><label><input type="checkbox" id="a1"><span>Clothes and shoes</span></label></li><li><label><input type="checkbox" id="a2"><span>Swimwear</span></label></li><li><label><input type="checkbox" id="a3"><span>Toiletries</span></label></li><li><label><input type="checkbox" id="a4"><span>Diapers, wipes, anti-rash cream</span></label></li><li><label><input type="checkbox" id="a5"><span>Bottles, formula, water</span></label></li><li><label><input type="checkbox" id="a6"><span>Vitamins, medicines</span></label></li><li><label><input type="checkbox" id="a7"><span>Books and/or toys</span></label></li><li><label><input type="checkbox" id="a8"><span>Passport</span></label></li></ul></li>
+      <li><label><input type="checkbox" id="c9"><span>Face masks for all</span></label></li>
+      <li><label><input type="checkbox" id="c10"><span>Raincoats / rain jackets</span></label></li>
+      <li><label><input type="checkbox" id="c11"><span>Stroller cover (get from car)</span></label></li>
     </ul></div>
   </section>
 
@@ -288,13 +327,59 @@ footer{margin-top:24px;font-size:.8rem;color:var(--muted)}
   });
 
   // checklist persistence (this browser only)
-  var KEY="sg-trip-checks-v3";
+  var KEY="sg-trip-checks-v4";
   var state={};
   try{state=JSON.parse(localStorage.getItem(KEY)||"{}");}catch(e){}
   document.querySelectorAll("#checks input").forEach(function(cb){
     cb.checked=!!state[cb.id];
     cb.addEventListener("change",function(){state[cb.id]=cb.checked;try{localStorage.setItem(KEY,JSON.stringify(state));}catch(e){}});
   });
+
+  // weather (Open-Meteo, no key). Last good result kept on this phone for offline use.
+  (function(){
+    var DAYS=["2026-11-06","2026-11-07","2026-11-08","2026-11-09","2026-11-10","2026-11-11"];
+    var URL="https://api.open-meteo.com/v1/forecast?latitude=1.3048&longitude=103.8536&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=Asia%2FSingapore&forecast_days=16";
+    var KEY="sg-trip-wx";
+    var grid=document.getElementById("wxGrid"),meta=document.getElementById("wxMeta"),btn=document.getElementById("wxRefresh");
+    var NEA='<a href="https://www.nea.gov.sg/weather" target="_blank" rel="noopener">NEA forecast</a>';
+    function desc(c){
+      if(c===0)return["☀️","Sunny"];if(c<=2)return["🌤️","Partly cloudy"];if(c===3)return["☁️","Cloudy"];
+      if(c===45||c===48)return["🌫️","Hazy"];if(c>=51&&c<=57)return["🌦️","Drizzle"];
+      if((c>=61&&c<=67)||(c>=80&&c<=82))return["🌧️","Showers"];if(c>=95)return["⛈️","Thunderstorms"];return["🌥️","Mixed"];
+    }
+    function label(iso){var d=new Date(iso+"T12:00:00+08:00");return d.toLocaleDateString("en-GB",{weekday:"short",day:"numeric",timeZone:"Asia/Singapore"});}
+    function render(data,when,stale){
+      var dl=data.daily,idx={};dl.time.forEach(function(t,i){idx[t]=i;});
+      var shown=0;
+      grid.innerHTML=DAYS.map(function(t){
+        var i=idx[t];
+        if(i===undefined) return '<div class="wx-day na"><div class="d">'+label(t)+'</div><div class="i">·</div><div class="c">Not yet</div></div>';
+        shown++;var w=desc(dl.weather_code[i]);
+        return '<div class="wx-day"><div class="d">'+label(t)+'</div><div class="i" aria-hidden="true">'+w[0]+'</div><div class="c">'+w[1]+'</div>'+
+          '<div class="hl">'+Math.round(dl.temperature_2m_max[i])+'° <span>/ '+Math.round(dl.temperature_2m_min[i])+'°</span></div>'+
+          '<div class="p">'+(dl.precipitation_probability_max[i]==null?'–':dl.precipitation_probability_max[i]+'%')+' rain</div></div>';
+      }).join("");
+      var ago=new Date(when).toLocaleString("en-GB",{day:"numeric",month:"short",hour:"numeric",minute:"2-digit",timeZone:"Asia/Singapore"});
+      meta.innerHTML=(stale?"Offline — showing forecast saved ":"Updated ")+ago+" (Singapore time). Temperatures in °C. "+
+        (shown<DAYS.length?"Days marked 'Not yet' appear once they're within the 16-day forecast. ":"")+
+        "Forecasts more than a week out can shift. Full details: "+NEA+".";
+    }
+    function saved(){try{return JSON.parse(localStorage.getItem(KEY)||"null");}catch(e){return null;}}
+    function load(){
+      btn.disabled=true;btn.textContent="Loading…";
+      fetch(URL,{cache:"no-store"}).then(function(r){if(!r.ok)throw new Error(r.status);return r.json();}).then(function(d){
+        var rec={data:d,when:Date.now()};try{localStorage.setItem(KEY,JSON.stringify(rec));}catch(e){}
+        render(d,rec.when,false);
+      }).catch(function(){
+        var s=saved();
+        if(s) render(s.data,s.when,true);
+        else{grid.innerHTML="";meta.innerHTML="Couldn't load the forecast. Check your connection and tap Refresh, or see the "+NEA+".";}
+      }).then(function(){btn.disabled=false;btn.textContent="Refresh";});
+    }
+    btn.addEventListener("click",load);
+    var s0=saved(); if(s0) render(s0.data,s0.when,true);
+    load();
+  })();
 })();
 </script>
 
